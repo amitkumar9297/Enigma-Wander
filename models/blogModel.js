@@ -21,11 +21,11 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [true, "image is required"]
     },
-    user: [{
+    user: {
         type: mongoose.Types.ObjectId,
         ref: "User",
         required: [true, "userId is required"]
-    }],
+    },
     likes: [{
         type: mongoose.Types.ObjectId,
         ref: "User"
@@ -33,7 +33,7 @@ const blogSchema = new mongoose.Schema({
     comment: [
         {
             type: mongoose.Types.ObjectId,
-            ref: "User"
+            ref: "Comment"
         }
     ],
     tags: [
@@ -50,6 +50,6 @@ const blogSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-const blogModel = new mongoose.model("blog", blogSchema, "blog");
+const blogModel = new mongoose.model("Blog", blogSchema, "Blog");
 
 module.exports = blogModel;

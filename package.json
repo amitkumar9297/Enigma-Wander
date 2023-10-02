@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A Blog App in this name 'Enigma' refers to something mysterious or puzzling, and 'Wander' suggests a journey or exploration. This name could symbolize a blog that delves into intriguing and enigmatic topics.",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +19,7 @@
     "express": "^4.18.2",
     "mongoose": "^7.4.3",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "validator": "^13.11.0"
   }
 }

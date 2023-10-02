@@ -5,8 +5,12 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId
     },
     comment: {
-        type: string
+        type: String
     }
 },
     { timestamps: true }
 );
+
+const commentModel = new mongoose.model("Comment", commentSchema, "Comment");
+
+module.exports = commentModel;
