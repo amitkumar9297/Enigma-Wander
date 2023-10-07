@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const blogModel = require('../models/blogModel')
+const multer = require('multer');
+const blogModel = require('../models/blogModel');
+const userModel = require('../models/userModel');
 
 exports.getLatestBlogsController = async (req, res) => {
     try {
@@ -121,11 +123,24 @@ exports.getPopularBlogsController = async (req, res) => {
 
 exports.createBlogController = async (req, res) => {
     try {
-        const { title, discription, entireBlog, image, category } = req.body;
+        const { title, discription, entireBlog, image, category, user } = req.body;
+        if (!title || !discription || !entireBlog || !image || !category || !user) {
+            return res.status(200).send({
+                success: false,
+                message: "please fill all details"
+            })
+        }
+        const existingUser = await userModel.findById(user);
+        if (!existingUser) {
+            return res.status(404).send({
+                success: false,
+                message: "unable to find user"
+            })
+        }
     } catch (err) {
         return res.status(500).send({
             success: false,
-            message: "error while during uplod on server",
+            message: "error while during upload on server",
             err
         })
     }
