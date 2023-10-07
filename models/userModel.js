@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema({
     }],
     following: [{
         type: mongoose.Types.ObjectId,
-        ref: "user"
+        ref: "User"
     }],
     bio: {
         type: String,
