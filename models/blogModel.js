@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema({
         required: [true, "Title is required"],
         minlength: 500
     },
-    image: {
+    file: {
         type: String,
         required: [true, "image is required"]
     },

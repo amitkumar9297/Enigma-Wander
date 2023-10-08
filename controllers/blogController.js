@@ -123,11 +123,18 @@ exports.getPopularBlogsController = async (req, res) => {
 
 exports.createBlogController = async (req, res) => {
     try {
-        const { title, discription, entireBlog, image, category, user } = req.body;
-        if (!title || !discription || !entireBlog || !image || !category || !user) {
+        const { title, discription, entireBlog, category, user } = req.body;
+        const file = req.file.filename;
+        if (!title || !discription || !entireBlog || !category || !user) {
             return res.status(200).send({
                 success: false,
                 message: "please fill all details"
+            })
+        }
+        if (!file) {
+            return res.status(400).send({
+                success: false,
+                message: "file not uploaded"
             })
         }
         const existingUser = await userModel.findById(user);
@@ -137,6 +144,18 @@ exports.createBlogController = async (req, res) => {
                 message: "unable to find user"
             })
         }
+        // upload file here
+
+        const blog = new blogModel({ title, discription, entireBlog, category, user, file });
+        const result = await blog.save();
+        await userModel.updateOne({ _id: user }, { $push: { blogs: result._id } });
+
+        return res.status(201).send({
+            success: true,
+            message: "blog successfully created",
+            blog
+        })
+
     } catch (err) {
         return res.status(500).send({
             success: false,
