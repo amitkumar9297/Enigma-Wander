@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel');
+const nodemailer = require('nodemailer');
 
 exports.getUserByNameController = async (req, res) => {
     try {
         const { name } = req.params;
-        const user = await userModel.find({ $or: [{ firstName: name }, { lastName: name }, { fullName: name }] }, { password: 0, phoneNo: 0, eMail: 0, savedBlog: 0, likedBlog: 0, commentedBlog: 0 });
+        const user = await userModel.find({ fullName: { $regex: name, $options: "i" } }, { password: 0, phoneNo: 0, eMail: 0, savedBlog: 0, likedBlog: 0, commentedBlog: 0 });
         if (!user) {
             return res.status(200).send({
                 success: false,
@@ -30,7 +31,7 @@ exports.getUserByNameController = async (req, res) => {
 exports.profileController = async (req, res) => {
     try {
         const { id } = req.params;
-        const profile = await userModel.find({ _id: id }, { password: 0, phoneNo: 0, eMail: 0 })
+        const profile = await userModel.findOne({ _id: id }, { password: 0, phoneNo: 0, eMail: 0 })
         if (!profile) {
             return res.status(200).send({
                 success: false,
@@ -53,7 +54,7 @@ exports.profileController = async (req, res) => {
 exports.getUserBlogsController = async (req, res) => {
     try {
         const { id } = req.params;
-        const blogsOfUser = await userModel.find({ id }, { blogs: 1 });
+        const blogsOfUser = await userModel.findOne({ _id: id }, { blogs: 1 });
         if (!blogsOfUser) {
             return res.status(200).send({
                 success: false,
@@ -76,7 +77,7 @@ exports.getUserBlogsController = async (req, res) => {
 exports.getLikedBlogsController = async (req, res) => {
     try {
         const { id } = req.params;
-        const likedBlogs = await userModel.find({ id }, { likedBlog: 1 });
+        const likedBlogs = await userModel.findOne({ _id: id }, { likedBlog: 1 });
         if (!likedBlogs) {
             return res.status(200).send({
                 success: false,
@@ -99,7 +100,7 @@ exports.getLikedBlogsController = async (req, res) => {
 exports.getCommentedBlogsController = async (req, res) => {
     try {
         const { id } = req.params;
-        const commentedBlogs = await userModel.find({ id }, { commentedBlog: 1 });
+        const commentedBlogs = await userModel.findOne({ _id: id }, { commentedBlog: 1 });
         if (!commentedBlogs) {
             return res.status(200).send({
                 success: false,
@@ -122,7 +123,7 @@ exports.getCommentedBlogsController = async (req, res) => {
 exports.getSavedBlogsController = async (req, res) => {
     try {
         const { id } = req.params;
-        const savedBlogs = await userModel.find({ id }, { savedBlog: 1 });
+        const savedBlogs = await userModel.findOne({ _id: id }, { savedBlog: 1 });
         if (!savedBlogs) {
             return res.status(200).send({
                 success: false,
@@ -165,6 +166,7 @@ exports.registerController = async (req, res) => {
         const user = new userModel({ firstName, lastName, fullName, eMail, phoneNo, password: hashedPassword });
 
         user.save();
+        sendMail(eMail);
 
         return res.status(201).send({
             success: true,
@@ -218,4 +220,37 @@ exports.loginController = async (req, res) => {
             err
         })
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function sendMail(eMail) {
+    let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.USER,
+            pass: process.env.PASS,
+        },
+    });
+    const info = transporter.sendMail({
+        from: '"Insight Roamer" <amitkumar790194@gmail.com>',
+        to: eMail,
+        text: "Thankyou for Registration",
+        html: "<b>you successfully registered</b>"
+
+    })
+
+
 }

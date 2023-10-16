@@ -1,0 +1,26 @@
+#userinfo-container {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 2%;
+}
+
+/* #user-name {
+    font-size: 1.3rem;
+    font-weight: 300;
+} */
+
+.bor-bot {
+    border-bottom: 1px solid gray;
+    padding-bottom: 14px;
+}
+
+.heading {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+#details {
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 100;
+}

@@ -1,0 +1,49 @@
+#headerContainer {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    background: 'current';
+    border-bottom: 1px solid black;
+}
+
+#searchButton {
+    background: seashell;
+    border: 1px;
+    border-radius: 5px;
+    width: 80%;
+    opacity: 0.9;
+    color: black;
+    margin: 2px;
+}
+
+#searchButton:hover {
+    transform: scale(1.05);
+}
+
+#searchButton:active {
+    transform: scale(1.05);
+
+}
+
+#aboutus {
+    width: 15%;
+    text-align: center;
+    margin: 2%;
+}
+
+#aboutus:active {
+    border-bottom: 1px solid blueviolet;
+}
+
+#help {
+    width: 10%;
+    text-align: center;
+    margin: 2%;
+}
+
+#avatar {
+    margin-left: 2%;
+    margin-right: 4%;
+}
