@@ -4,7 +4,7 @@ import { Avatar, Box, HStack, VStack } from '@chakra-ui/react'
 
 const UserInfo = () => {
     return (
-        <Box id='userinfo-container' w={'15%'}>
+        <Box id='userinfo-container' minW={'20%'} maxW={'30%'}>
             <VStack >
                 <Avatar id='avatar' size={'lg'} />
                 <h1 className='heading'>{`${'Full Name'}`}</h1>

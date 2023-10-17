@@ -6,6 +6,7 @@ import About from './pages/About';
 import Help from './pages/Help';
 import UserProfile from './pages/UserProfile';
 import Category from './pages/Category';
+import Login from './pages/Login';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/help' element={<Help />} />
           <Route path='/userprofile' element={<UserProfile />} />
           <Route path='/category/:items' element={<Category />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </Router>
     </div>
